@@ -1,7 +1,15 @@
 import React from 'react';
+import { Paper, Grid, withStyles } from '@material-ui/core';
 import './data.css';
 
+const styles = {
+  paper: {
+    textAlign: 'center',
+  }
+};
+
 const Data = (props) => {
+	const { classes } = props;
 	let info = null;
 	let test = [];
 
@@ -35,14 +43,20 @@ const Data = (props) => {
 		}
 
 		// map test results into divs
-		info = test.map((el, index) => <div key={index}>{el}</div>);
+		info = test.map((el, index) => {
+			return (
+				<Grid item key={index} xs={6}>
+          <Paper className={classes.paper}>{el}</Paper>
+        </Grid>
+			);
+		});
 	}
 
 	return (
-		<div className="grid-container">
+		<Grid container spacing={0}>
 			{info}
-		</div>
+		</Grid>
 	);
 }
 
-export default Data;
+export default withStyles(styles)(Data);

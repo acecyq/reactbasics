@@ -24,8 +24,8 @@ class App extends Component {
 	}
 
 	// when a company name is clicked
-	listClick = (event) => {
-		let info = this.state.data.generated[event.target.id];
+	listClick = (event, index) => {
+		let info = this.state.data.generated[index];
 		this.setState({ info : info });
 	}
 
