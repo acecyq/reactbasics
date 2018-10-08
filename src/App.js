@@ -1,42 +1,41 @@
 import React, { Component } from 'react';
+import Layout from './layout/layout';
+import Table from './components/table/table';
 
-// import lists and data components
-import Lists from './components/lists/lists';
-import Data from './components/data/data';
-
-// import json file
-import generated from './json/generated';
+import axios from 'axios';
 
 // import app css file
 import './App.css';
 
-
-
 class App extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
+	state = {
 
-			// data from json file
-			data : {generated},
-			info : {}
-		}
+		// users is an empty array
+		users : [],
+		criteria : "username"
 	}
 
-	// when a company name is clicked
-	listClick = (event, index) => {
-		let info = this.state.data.generated[index];
-		this.setState({ info : info });
+	componentDidMount() {
+
+		// run ajax request to get all users data
+		axios.get('https://jsonplaceholder.typicode.com/users')
+			.then(res => {
+				this.setState({ users : res.data });
+			});
 	}
 
-  render() {
-    return (
-      <div className="App">
-        <Lists data={this.state.data} clicked={this.listClick} />
-        <Data info={this.state.info} />
-      </div>
-    );
-  }
+	headingClick = (att) => {
+		this.setState({ criteria : att });
+	}
+
+	render() {
+		return (
+			<div className="App">
+				<Layout />
+				<Table users={this.state.users} criteria={this.state.criteria} click={this.headingClick} />
+			</div>
+		);
+	}
 }
 
 export default App;
