@@ -12,15 +12,20 @@ class App extends Component {
 
 		// users is an empty array
 		users : [],
-		criteria : "username"
+		criteria : "username",
+		error : false
 	}
 
 	componentDidMount() {
 
 		// run ajax request to get all users data
-		axios.get('https://jsonplaceholder.typicode.com/users')
+		axios.get('/users')
 			.then(res => {
 				this.setState({ users : res.data });
+			})
+			.catch(err => {
+				console.log(err);
+				this.setState({ error : true });
 			});
 	}
 
@@ -32,7 +37,11 @@ class App extends Component {
 		return (
 			<div className="App">
 				<Layout />
-				<Table users={this.state.users} criteria={this.state.criteria} click={this.headingClick} />
+				{!this.state.error ?
+					<Table users={this.state.users} criteria={this.state.criteria} click={this.headingClick} />
+				:
+					<h1>something went wrong!</h1>
+				}
 			</div>
 		);
 	}
