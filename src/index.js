@@ -11,24 +11,18 @@ axios.defaults.headers.common['Authorization'] = "AUTH TOKEN";
 axios.defaults.headers.post['Content-Type'] = "application/json";
 
 axios.interceptors.request.use(req => {
-	console.log(req);
 
 	// edit request configs here
-
 	return req;
 }, err => {
-	console.log(err);
 	return Promise.reject(err);
 });
 
 axios.interceptors.response.use(res => {
-	console.log(res);
 
 	// edit response configs here
-
 	return res;
 }, err => {
-	console.log(err);
 	return Promise.reject(err);
 });
 
