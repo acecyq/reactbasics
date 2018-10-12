@@ -7,7 +7,7 @@ export default props =>  {
       <AppBar position="static" color="inherit">
         <Toolbar>
           <Typography variant="title" color="inherit">
-            React Basics
+            Blog Posts and Comments Back End
           </Typography>
         </Toolbar>
       </AppBar>

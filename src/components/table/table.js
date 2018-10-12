@@ -1,22 +1,37 @@
 import React, { Component } from 'react';
 import Data from './data/data';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Button } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
+
+// modify hover attribute of styles
+const styles = {
+	hover: {
+		cursor : "pointer"
+	}
+}
 
 class TableComponent extends Component {
 	userClick = (id) => {
-		this.props.history.push(`/posts/?user=${id}`);
+		if (this.props.location.pathname === '/'){
+			this.props.history.push(`/posts/?user=${id}`);
+		} else if (this.props.location.pathname === '/posts/') {
+			this.props.history.push(`/posts/${id}/comments`);
+		}
+		
 	}
 
 	render() {
 		let headings, list, data;
+		const { classes } = this.props;
 
-		// iterate through the keys of a user to render them as table headings
-		if (this.props.users.length > 0) {
-			headings = Object.keys(this.props.users[0]).map(att => {
+		// iterate through the keys of a data to render them as table headings
+		if (this.props.data.length > 0) {
+			headings = Object.keys(this.props.data[0]).map(att => {
 
-				// except for id number, render the rest as table headings
-				if (att !== "id") {
+				// except for ids, render the rest as table headings
+				if (att !== "id" && att !== "userId" && att !== "postId") {
 					return(
 						<TableCell key={att}>
 							{att.toUpperCase()}
@@ -31,7 +46,7 @@ class TableComponent extends Component {
 			});
 
 			// sort through users based on alphabetical order of the selected attribute
-			list = this.props.users.sort((a, b) => {
+			list = this.props.data.sort((a, b) => {
 				let x, y;
 
 				// if address is selected, sort by address street
@@ -58,10 +73,17 @@ class TableComponent extends Component {
 			})
 
 			// create one row for every user
-			data = list.map(user => {
+			data = list.map(el => {
 				return (
-					<TableRow key={user.id} hover onClick={() => this.userClick(user.id)}>
-						<Data user={user} />
+					<TableRow
+						key={el.id} 
+						classes={{
+							hover : classes.hover
+						}}
+						hover
+						onClick={() => this.userClick(el.id)}
+					>
+						<Data data={el} />
 					</TableRow>
 				);
 			})
@@ -84,4 +106,9 @@ class TableComponent extends Component {
 	}
 }
 
-export default withRouter(TableComponent);
+TableComponent.propTypes = {
+	classes: PropTypes.object.isRequired,
+};
+
+// wrap withStyles with withRouter
+export default withRouter(withStyles(styles)(TableComponent));

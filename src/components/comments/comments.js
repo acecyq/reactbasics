@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import Comment from './comment/comment';
+import Table from '../table/table';
 import Spinner from '../../ui/spinner/spinner';
-import { Link } from 'react-router-dom';
+import Heading from '../../ui/heading/heading';
+import Root from '../root/root';
 
 export default class extends Component {
     state = {
-        data : null
+        data : null,
+        criteria : null
     }
 
     componentDidMount() {
@@ -20,19 +22,27 @@ export default class extends Component {
             .catch(err => err);
     }
 
+    headingClick = (att) => {
+        this.setState({ criteria : att });
+    }
+
     render() {
-        const data = this.state.data ?
-            this.state.data.map(comment => {
-                return (
-                    <Comment key={comment.name} {...comment} />
-                )
-            }) :
+        const content = this.state.data ?
+            <Fragment>
+                <Heading value="Comments" />
+                <Table 
+                    data={this.state.data} 
+                    criteria={this.state.criteria}
+                    click={this.headingClick}
+                />
+            </Fragment>
+             :
             <Spinner />;
 
         return (
             <Fragment>
-                {data}
-                <Link to="/">Back to Users</Link>
+                {content}
+                <Root />
             </Fragment>
         );
     }

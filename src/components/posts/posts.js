@@ -1,12 +1,18 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import Post from './post/post';
+import Table from '../table/table';
 import Spinner from '../../ui/spinner/spinner';
-import { NavLink } from 'react-router-dom';
+import Heading from '../../ui/heading/heading';
+import Root from '../root/root';
 
 export default class extends Component {
     state = {
-        data : null
+        data : null,
+        criteria : null
+    }
+
+    headingClick = (att) => {
+        this.setState({ criteria : att });
     }
 
     componentDidMount() {
@@ -23,16 +29,21 @@ export default class extends Component {
     }
 
     render() {
-        const data = this.state.data ?
-            this.state.data.map(post => {
-                return <Post key={post.id} post={post} />
-            }) :
+        const content = this.state.data ?
+            <Fragment>
+                <Heading value="Posts" />
+                <Table 
+                    data={this.state.data} 
+                    criteria={this.state.criteria}
+                    click={this.headingClick}
+                />
+            </Fragment> :
             <Spinner />;
 
         return (
             <Fragment>
-                {data}
-                <NavLink to="/">Back to Users</NavLink>
+                {content}
+                <Root />
             </Fragment>        
         )
     }

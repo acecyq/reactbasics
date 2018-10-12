@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Layout from './layout/layout';
 import Spinner from './ui/spinner/spinner';
+import Heading from './ui/heading/heading';
 import Table from './components/table/table';
 import Posts from './components/posts/posts';
 import Comments from './components/comments/comments';
@@ -45,7 +46,15 @@ class App extends Component {
 		if (this.state.users.length > 0) {
 
 			// make a table with the users
-			body = <Table users={this.state.users} criteria={this.state.criteria} click={this.headingClick} />
+			body =
+			<Fragment>
+				<Heading value="Users" />
+				<Table 
+					data={this.state.users} 
+					criteria={this.state.criteria} 
+					click={this.headingClick} 
+				/>
+			</Fragment>
 		} else if (this.state.error) {
 
 			// if there is error show h1 tag with something went wrong
