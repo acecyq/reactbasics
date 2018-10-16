@@ -2,7 +2,11 @@ import React, { Fragment } from 'react';
 import TableCell from '@material-ui/core/TableCell';
 
 export default props => {
-	let data = [];
+	let data = [
+		<TableCell key={`${props.data.username} ${props.index}`}>
+			{props.index + 1}
+		</TableCell>
+	];
 	for (let att in props.data) {
 		if (att === "address") {
 			const add = Object.values(props.data[att]).slice(0,4).join(" ");

@@ -44,6 +44,11 @@ class TableComponent extends Component {
 				}
 				return null;
 			});
+			headings = [(
+				<TableCell key="index">
+					INDEX
+				</TableCell>
+			), ...headings]
 
 			// sort through users based on alphabetical order of the selected attribute
 			list = this.props.data.sort((a, b) => {
@@ -73,7 +78,7 @@ class TableComponent extends Component {
 			})
 
 			// create one row for every user
-			data = list.map(el => {
+			data = list.map((el, index) => {
 				return (
 					<TableRow
 						key={el.id} 
@@ -83,7 +88,7 @@ class TableComponent extends Component {
 						hover
 						onClick={() => this.userClick(el.id)}
 					>
-						<Data data={el} />
+						<Data data={el} index={index} />
 					</TableRow>
 				);
 			})
