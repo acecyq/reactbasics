@@ -4,6 +4,6 @@ import './root.css';
 
 export default props => (
     <div className="root">
-        <Link to="/">Back to Users</Link>
+        <Link to="/users">Back to Users</Link>
     </div>
 );

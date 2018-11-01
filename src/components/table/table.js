@@ -14,12 +14,11 @@ const styles = {
 
 class TableComponent extends Component {
 	userClick = (id) => {
-		if (this.props.location.pathname === '/'){
+		if (this.props.location.pathname === '/users'){
 			this.props.history.push(`/posts/?user=${id}`);
 		} else if (this.props.location.pathname === '/posts/') {
-			this.props.history.push(`/posts/${id}/comments`);
+			this.props.history.push(`/comments/${id}/posts`);
 		}
-		
 	}
 
 	render() {
